@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "title": "Yaqeen - Cancer Patient Support in Egypt",
+    "description": "Egypt's first platform supporting cancer patients and caregivers. Trusted medical information, procedural guides, and psychological support."
+  },
+  "nav": {
+    "home": "Home",
+    "guide": "Procedures Guide",
+    "cancerTypes": "Cancer Types",
+    "nutrition": "Nutrition & Immunity",
+    "caregivers": "For Caregivers",
+    "stories": "Hope Stories",
+    "campaigns": "Awareness Campaigns",
+    "doctors": "Doctors' Words",
+    "chat": "AI Assistant"
+  },
+  "hero": {
+    "badge": "An initiative to support Egyptian patients",
+    "title": "We're With You",
+    "titleHighlight": "Every Step of the Way",
+    "subtitle": "Egypt's first platform for cancer fighters. Trusted medical information, government procedure guides, and psychological support for you and your family.",
+    "ctaGuide": "Free Treatment Guide",
+    "ctaStories": "Hope Stories",
+    "ctaChat": "Chat with Assistant"
+  },
+  "stats": {
+    "hospitals": "Hospitals & Centers",
+    "recoveries": "Recovery Stories",
+    "doctors": "Consultant Doctors"
+  },
+  "quickAccess": {
+    "guide": {
+      "title": "Treatment Decisions",
+      "description": "Steps to obtain state-funded treatment and health insurance decisions."
+    },
+    "types": {
+      "title": "Understand Your Diagnosis",
+      "description": "Simplified information about tumor types and modern treatment methods."
+    },
+    "nutrition": {
+      "title": "Your Health in Your Food",
+      "description": "Egyptian food recipes to boost immunity and reduce treatment side effects."
+    }
+  },
+  "partners": {
+    "title": "Our Partners in Egypt"
+  },
+  "emergency": {
+    "title": "Emergency",
+    "health": "Health Hotline",
+    "cancerInstitute": "Cancer Institute",
+    "insurance": "Health Insurance"
+  },
+  "footer": {
+    "description": "Yaqeen is a non-profit initiative, designed by Egyptian hands to serve every patient and caregiver in Egypt. Our goal is to provide you with accurate information, reassure your heart, and save you many trips.",
+    "sections": "Site Sections",
+    "importantLinks": "Important Links",
+    "medicalBoards": "Specialized Medical Boards",
+    "healthInsurance": "Health Insurance Authority",
+    "presidentialInitiatives": "Presidential Initiatives",
+    "copyright": "All Rights Reserved",
+    "disclaimer": "Disclaimer: All medical information on this site is for awareness and guidance purposes only and does not in any way replace consulting a specialist doctor and diagnosing the condition."
+  },
+  "common": {
+    "readMore": "Read More",
+    "readDetails": "Read Details",
+    "backToList": "Back to List",
+    "shareStory": "Share Your Story",
+    "volunteer": "Register as Volunteer",
+    "helpful": "Very Helpful",
+    "readOther": "Read Other Articles",
+    "wasHelpful": "Was this article helpful?",
+    "awareness": "Awareness Article"
+  },
+  "chat": {
+    "title": "AI Assistant",
+    "subtitle": "I'm here to help you and answer your questions",
+    "placeholder": "Type your question here...",
+    "send": "Send",
+    "quickPrompts": {
+      "treatment": "How do I get state-funded treatment?",
+      "hospitals": "Where is the nearest cancer hospital?",
+      "nutrition": "What food is suitable during chemotherapy?",
+      "support": "I need psychological support"
+    },
+    "disclaimer": "The information provided is for awareness only and does not replace consulting a specialist doctor."
+  }
+}
