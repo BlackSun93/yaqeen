@@ -12,6 +12,7 @@ interface NavbarProps {
 
 const navItems = [
   { id: 'home', href: '/' },
+  { id: 'screening', href: '/screening' },
   { id: 'guide', href: '/guide' },
   { id: 'cancerTypes', href: '/cancer-types' },
   { id: 'nutrition', href: '/nutrition' },

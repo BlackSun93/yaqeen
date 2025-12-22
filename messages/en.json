@@ -5,6 +5,7 @@
   },
   "nav": {
     "home": "Home",
+    "screening": "Self Screening",
     "guide": "Procedures Guide",
     "cancerTypes": "Cancer Types",
     "nutrition": "Nutrition & Immunity",
@@ -84,5 +85,55 @@
       "support": "I need psychological support"
     },
     "disclaimer": "The information provided is for awareness only and does not replace consulting a specialist doctor."
+  },
+  "screening": {
+    "title": "Self Screening",
+    "subtitle": "Simple surveys to help you understand risk factors and the importance of early detection",
+    "selectSurvey": "Select a Survey",
+    "start": "Start Survey",
+    "next": "Next",
+    "previous": "Previous",
+    "finish": "Show Results",
+    "restart": "Start Over",
+    "backToSurveys": "Back to Surveys",
+    "question": "Question",
+    "of": "of",
+    "yes": "Yes",
+    "no": "No",
+    "notSure": "Not Sure",
+    "disclaimer": "This survey is for awareness only and is not a medical diagnosis. Consult your doctor for proper examination.",
+    "result": {
+      "title": "Your Result",
+      "low": "Low Risk",
+      "lowDesc": "Your risk factors are few. Maintain a healthy lifestyle and get regular checkups.",
+      "medium": "Medium Risk",
+      "mediumDesc": "You have some risk factors. We recommend early screening and consulting a doctor.",
+      "high": "High Risk",
+      "highDesc": "You have multiple risk factors. It's very important to see a doctor soon for examination.",
+      "recommendation": "Recommendation",
+      "nearestCenter": "Nearest Screening Center"
+    },
+    "surveys": {
+      "breast": {
+        "title": "Breast Cancer Screening",
+        "description": "For women over 20 - Learn about risk factors and self-examination",
+        "icon": "Heart"
+      },
+      "colon": {
+        "title": "Colon Cancer Screening",
+        "description": "For men and women over 45 - Learn about risk factors",
+        "icon": "Activity"
+      },
+      "lung": {
+        "title": "Lung Cancer Screening",
+        "description": "For smokers and non-smokers - Learn how your lifestyle affects you",
+        "icon": "Wind"
+      },
+      "prostate": {
+        "title": "Prostate Cancer Screening",
+        "description": "For men over 50 - Learn about risk factors",
+        "icon": "User"
+      }
+    }
   }
 }

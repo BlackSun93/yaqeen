@@ -73,10 +73,12 @@ export default function ChatInterface({ locale }: ChatInterfaceProps) {
             </div>
           ) : (
             <>
-              {messages.map((message) => (
+              {messages
+                .filter((message) => message.role !== 'data')
+                .map((message) => (
                 <ChatMessage
                   key={message.id}
-                  role={message.role}
+                  role={message.role as 'user' | 'assistant' | 'system'}
                   content={message.content}
                   locale={locale}
                 />
