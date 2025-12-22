@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle, Eye, Hand, CircleDot } from 'lucide-react';
 import type { Survey } from '@/content/ar/screening';
 import { cn } from '@/lib/utils';
 
@@ -14,11 +14,31 @@ interface SurveyQuestionsProps {
 
 type RiskLevel = 'low' | 'medium' | 'high';
 
+const selfExamSteps = {
+  ar: [
+    { icon: Eye, title: 'المرآة', desc: 'قفي قدام المرآة وشوفي أي تغيرات في الشكل أو الحجم' },
+    { icon: Hand, title: 'الفحص بالأصابع', desc: 'بحركة دائرية، افحصي كل منطقة من الثدي بأطراف أصابعك' },
+    { icon: CircleDot, title: 'تحت الإبط', desc: 'متنسيش فحص منطقة تحت الإبط لأي تكتلات' },
+  ],
+  en: [
+    { icon: Eye, title: 'Mirror Check', desc: 'Stand in front of a mirror and look for any changes in shape or size' },
+    { icon: Hand, title: 'Finger Exam', desc: 'Using circular motions, examine each area of the breast with your fingertips' },
+    { icon: CircleDot, title: 'Under Arm', desc: "Don't forget to check the underarm area for any lumps" },
+  ],
+};
+
+const warningSigns = {
+  ar: ['تغير في حجم أو شكل الثدي', 'تكتل أو سماكة جديدة', 'تغير في الجلد أو الحلمة', 'إفرازات غير طبيعية'],
+  en: ['Change in breast size or shape', 'New lump or thickening', 'Changes in skin or nipple', 'Unusual discharge'],
+};
+
 export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuestionsProps) {
   const t = useTranslations('screening');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
+  const [showSelfExamIntro, setShowSelfExamIntro] = useState(survey.id === 'breast');
+  const [showSelfExamSteps, setShowSelfExamSteps] = useState(false);
   const isRTL = locale === 'ar';
 
   const question = survey.questions[currentQuestion];
@@ -61,6 +81,124 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
     if (percentage < 60) return 'medium';
     return 'high';
   };
+
+  // Self-Exam Introduction Screen (for breast cancer only)
+  if (showSelfExamIntro && survey.id === 'breast') {
+    return (
+      <div className="container mx-auto px-4 py-12 min-h-screen animate-fade-in">
+        <div className="max-w-2xl mx-auto">
+          <button
+            onClick={onBack}
+            className={cn('flex items-center text-gray-500 hover:text-emerald-600 mb-6 transition-colors')}
+          >
+            <ArrowLeft className={cn('w-5 h-5', isRTL ? 'ml-2 rotate-180' : 'mr-2')} />
+            {t('backToSurveys')}
+          </button>
+
+          <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-3xl p-8 border border-pink-200">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-pink-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Hand className="w-8 h-8 text-pink-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                {locale === 'ar' ? 'الفحص الذاتي للثدي' : 'Breast Self-Examination'}
+              </h2>
+              <p className="text-gray-600">
+                {locale === 'ar'
+                  ? 'هل تحبي تتعلمي خطوات الفحص الذاتي قبل ما تبدأي الاستبيان؟'
+                  : 'Would you like to learn self-examination steps before starting the survey?'}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  setShowSelfExamIntro(false);
+                  setShowSelfExamSteps(true);
+                }}
+                className="w-full p-4 rounded-xl bg-pink-500 text-white font-bold hover:bg-pink-600 transition-colors"
+              >
+                {locale === 'ar' ? 'أيوه، عايزة أتعلم' : 'Yes, I want to learn'}
+              </button>
+              <button
+                onClick={() => setShowSelfExamIntro(false)}
+                className="w-full p-4 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-colors"
+              >
+                {locale === 'ar' ? 'لا، ابدأ الاستبيان مباشرة' : 'No, start the survey directly'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Self-Exam Steps Screen
+  if (showSelfExamSteps) {
+    const steps = selfExamSteps[locale === 'ar' ? 'ar' : 'en'];
+    const signs = warningSigns[locale === 'ar' ? 'ar' : 'en'];
+
+    return (
+      <div className="container mx-auto px-4 py-12 min-h-screen animate-fade-in">
+        <div className="max-w-2xl mx-auto">
+          <button
+            onClick={() => {
+              setShowSelfExamSteps(false);
+              setShowSelfExamIntro(true);
+            }}
+            className={cn('flex items-center text-gray-500 hover:text-emerald-600 mb-6 transition-colors')}
+          >
+            <ArrowLeft className={cn('w-5 h-5', isRTL ? 'ml-2 rotate-180' : 'mr-2')} />
+            {t('backToSurveys')}
+          </button>
+
+          <div className="bg-white rounded-3xl shadow-lg p-8">
+            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+              <Hand className="w-6 h-6 text-pink-600" />
+              {locale === 'ar' ? 'خطوات الفحص الذاتي' : 'Self-Exam Steps'}
+            </h2>
+
+            <div className="space-y-4 mb-6">
+              {steps.map((step, idx) => {
+                const StepIcon = step.icon;
+                return (
+                  <div key={idx} className="flex items-start gap-4 bg-pink-50 rounded-xl p-4">
+                    <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center shrink-0">
+                      <StepIcon className="w-6 h-6 text-pink-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-800">{step.title}</h4>
+                      <p className="text-gray-600 text-sm">{step.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-200">
+              <p className="text-sm font-bold text-amber-800 mb-2">
+                {locale === 'ar' ? 'استشيري طبيبك فوراً لو لاحظتي:' : 'Consult your doctor immediately if you notice:'}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {signs.map((sign, idx) => (
+                  <span key={idx} className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full">
+                    {sign}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowSelfExamSteps(false)}
+              className="w-full p-4 rounded-xl bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition-colors"
+            >
+              {locale === 'ar' ? 'فهمت، ابدأ الاستبيان' : 'Got it, start the survey'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (showResults) {
     const risk = calculateRisk();
