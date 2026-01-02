@@ -1,41 +1,41 @@
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import ArticleDetail from '@/components/articles/ArticleDetail';
-import { cancerTypesArticles } from '@/content/ar/cancer-types';
+import { CancerTypeDetail } from '@/components/cancer-types';
+import { cancerTypes, getCancerTypeById } from '@/content/ar/cancer-types';
 
-interface ArticlePageProps {
+interface CancerTypePageProps {
   params: Promise<{ locale: string; id: string }>;
 }
 
 export async function generateStaticParams() {
-  return cancerTypesArticles.map((article) => ({
-    id: article.id,
+  return cancerTypes.map((cancerType) => ({
+    id: cancerType.id,
   }));
 }
 
-export async function generateMetadata({ params }: ArticlePageProps) {
+export async function generateMetadata({ params }: CancerTypePageProps) {
   const { id } = await params;
-  const article = cancerTypesArticles.find((a) => a.id === id);
+  const cancerType = getCancerTypeById(id);
 
-  if (!article) {
-    return { title: 'Article Not Found' };
+  if (!cancerType) {
+    return { title: 'Cancer Type Not Found' };
   }
 
   return {
-    title: article.title,
-    description: article.excerpt,
+    title: `${cancerType.title} | ${cancerType.englishName}`,
+    description: cancerType.excerpt,
   };
 }
 
-export default async function CancerTypeArticlePage({ params }: ArticlePageProps) {
+export default async function CancerTypePage({ params }: CancerTypePageProps) {
   const { locale, id } = await params;
   setRequestLocale(locale);
 
-  const article = cancerTypesArticles.find((a) => a.id === id);
+  const cancerType = getCancerTypeById(id);
 
-  if (!article) {
+  if (!cancerType) {
     notFound();
   }
 
-  return <ArticleDetail article={article} backHref="/cancer-types" locale={locale} />;
+  return <CancerTypeDetail cancerType={cancerType} />;
 }

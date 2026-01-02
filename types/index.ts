@@ -30,9 +30,14 @@ export interface Campaign {
 
 export interface Partner {
   name: string;
-  nameEn: string;
   color: string;
   bg: string;
 }
 
-export type Locale = 'ar' | 'en';
+export type Locale = 'ar';
+
+// Re-export cancer types
+export * from './cancer-types';
+
+// Re-export articles types
+export * from './articles';

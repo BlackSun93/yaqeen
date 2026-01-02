@@ -24,6 +24,110 @@ export interface Survey {
 
 export const screeningSurveys: Survey[] = [
   {
+    id: 'general',
+    titleKey: 'surveys.general.title',
+    descriptionKey: 'surveys.general.description',
+    icon: 'Scan',
+    color: 'teal',
+    questions: [
+      {
+        id: 'g1',
+        question: 'هل لاحظت أي فقدان وزن غير مبرر (أكثر من 5 كيلو) في آخر 3 شهور؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 3 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g2',
+        question: 'هل تعاني من إرهاق أو تعب شديد مستمر بدون سبب واضح؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 2 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g3',
+        question: 'هل لاحظت أي تكتل أو ورم أو تورم غير طبيعي في أي مكان في جسمك؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 3 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1.5 },
+        ],
+      },
+      {
+        id: 'g4',
+        question: 'هل عندك ألم مستمر في أي منطقة في جسمك بدون سبب واضح؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 2 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g5',
+        question: 'هل لاحظت أي تغيرات في الجلد؟ (شامة تتغير لونها/حجمها، جرح مش بيخف، تقرحات)؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 3 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g6',
+        question: 'هل عندك صعوبة في البلع أو عسر هضم مستمر؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 2 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g7',
+        question: 'هل لاحظت أي نزيف غير طبيعي؟ (دم في البول، البراز، السعال، أو نزيف غير متوقع)؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 3 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1.5 },
+        ],
+      },
+      {
+        id: 'g8',
+        question: 'هل عندك تغير مستمر في عادات الإخراج؟ (إمساك، إسهال، أو تغير في البول)؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 2 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g9',
+        question: 'هل فيه تاريخ عائلي للسرطان؟ (أقارب من الدرجة الأولى)؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 2 },
+          { value: 'no', label: 'لا', score: 0 },
+          { value: 'notSure', label: 'مش متأكد', score: 1 },
+        ],
+      },
+      {
+        id: 'g10',
+        question: 'هل بتعمل فحص طبي دوري شامل سنوياً؟',
+        options: [
+          { value: 'yes', label: 'نعم', score: 0 },
+          { value: 'no', label: 'لا', score: 1 },
+          { value: 'notSure', label: 'مش متأكد', score: 0.5 },
+        ],
+      },
+    ],
+    recommendations: {
+      low: 'ممتاز! عوامل الخطر عندك قليلة. حافظ على نمط حياة صحي، نظام غذائي متوازن، رياضة منتظمة، وفحص طبي سنوي للاطمئنان.',
+      medium: 'عندك بعض الأعراض اللي تستحق الانتباه. ننصحك بزيارة طبيب عام لعمل فحص شامل والاطمئنان على صحتك.',
+      high: 'الأعراض اللي عندك محتاجة فحص طبي عاجل. من فضلك روح لدكتور متخصص في أقرب وقت. الكشف المبكر مهم جداً.',
+    },
+  },
+  {
     id: 'breast',
     titleKey: 'surveys.breast.title',
     descriptionKey: 'surveys.breast.description',

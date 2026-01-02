@@ -103,7 +103,7 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-gray-500">
-                      {locale === 'ar' ? 'طوارئ الصحة' : 'Health Emergency'}
+                      طوارئ الصحة
                     </p>
                     <p className="font-bold text-gray-800 dir-ltr">105</p>
                   </div>
@@ -117,10 +117,10 @@ export default function HeroSection({ locale }: HeroSectionProps) {
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-gray-500">
-                      {locale === 'ar' ? 'نفقة الدولة' : 'State Funding'}
+                      نفقة الدولة
                     </p>
                     <p className="font-bold text-gray-800 text-xs">
-                      {locale === 'ar' ? 'متاح للجميع' : 'Available to all'}
+                      متاح للجميع
                     </p>
                   </div>
                 </div>

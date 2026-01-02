@@ -17,6 +17,7 @@ const colorClasses: Record<string, { bg: string; text: string; border: string }>
   blue: { bg: 'bg-blue-50', text: 'text-blue-600', border: 'border-blue-200 hover:border-blue-400' },
   gray: { bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-200 hover:border-gray-400' },
   emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-200 hover:border-emerald-400' },
+  teal: { bg: 'bg-teal-50', text: 'text-teal-600', border: 'border-teal-200 hover:border-teal-400' },
 };
 
 export default function SurveyCard({ survey, Icon, locale, onClick }: SurveyCardProps) {

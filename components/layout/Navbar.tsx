@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/routing';
-import { Heart, Menu, X, Phone, Globe } from 'lucide-react';
+import { Heart, Menu, X, Phone } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavbarProps {
@@ -13,9 +13,10 @@ interface NavbarProps {
 const navItems = [
   { id: 'home', href: '/' },
   { id: 'screening', href: '/screening' },
-  { id: 'guide', href: '/guide' },
+  { id: 'journey', href: '/journey' },
   { id: 'cancerTypes', href: '/cancer-types' },
-  { id: 'nutrition', href: '/nutrition' },
+  { id: 'learn', href: '/articles' },
+  { id: 'guide', href: '/guide' },
   { id: 'caregivers', href: '/caregivers' },
   { id: 'stories', href: '/stories' },
   { id: 'chat', href: '/chat' },
@@ -26,10 +27,7 @@ export default function Navbar({ locale }: NavbarProps) {
   const t = useTranslations('nav');
   const tEmergency = useTranslations('emergency');
   const pathname = usePathname();
-  const isRTL = locale === 'ar';
-
-  const otherLocale = locale === 'ar' ? 'en' : 'ar';
-  const otherLocaleLabel = locale === 'ar' ? 'English' : 'عربي';
+  const isRTL = true;
 
   return (
     <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
@@ -41,7 +39,7 @@ export default function Navbar({ locale }: NavbarProps) {
               <Heart className="w-6 h-6" fill="currentColor" />
             </div>
             <span className="text-2xl font-bold text-gray-800 tracking-tight">
-              {locale === 'ar' ? 'يقين' : 'Yaqeen'}
+              يقين
             </span>
           </Link>
 
@@ -63,18 +61,8 @@ export default function Navbar({ locale }: NavbarProps) {
             ))}
           </div>
 
-          {/* Right Section: Language + Emergency */}
+          {/* Right Section: Emergency */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Language Switcher */}
-            <Link
-              href={pathname}
-              locale={otherLocale}
-              className="flex items-center gap-2 text-sm text-gray-600 hover:text-emerald-600 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100"
-            >
-              <Globe className="w-4 h-4" />
-              {otherLocaleLabel}
-            </Link>
-
             {/* Emergency */}
             <div className="flex items-center gap-3">
               <div className={cn('flex flex-col text-xs text-gray-500', isRTL ? 'items-end' : 'items-start')}>
@@ -119,17 +107,6 @@ export default function Navbar({ locale }: NavbarProps) {
                 )}
               </Link>
             ))}
-
-            {/* Mobile Language Switcher */}
-            <Link
-              href={pathname}
-              locale={otherLocale}
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-4 rounded-xl text-gray-600 hover:bg-gray-50 flex items-center gap-2 border-t border-gray-100 mt-2 pt-4"
-            >
-              <Globe className="w-5 h-5" />
-              {otherLocaleLabel}
-            </Link>
 
             {/* Mobile Emergency Numbers */}
             <div className="mt-4 pt-4 border-t border-gray-100">

@@ -23,12 +23,10 @@ export default function EmergencyStrip({ locale }: EmergencyStripProps) {
           <Phone className="w-6 h-6" />
           <div>
             <h3 className="text-xl font-bold">
-              {locale === 'ar' ? 'أرقام تهمك' : 'Important Numbers'}
+              أرقام تهمك
             </h3>
             <p className="text-emerald-100 text-sm">
-              {locale === 'ar'
-                ? 'احفظ الأرقام دي عندك للطوارئ أو الاستفسار'
-                : 'Save these numbers for emergencies or inquiries'}
+              احفظ الأرقام دي عندك للطوارئ أو الاستفسار
             </p>
           </div>
         </div>

@@ -14,7 +14,7 @@ interface ChatInterfaceProps {
 
 export default function ChatInterface({ locale }: ChatInterfaceProps) {
   const t = useTranslations('chat');
-  const isRTL = locale === 'ar';
+  const isRTL = true;
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -62,12 +62,10 @@ export default function ChatInterface({ locale }: ChatInterfaceProps) {
             <div className="flex flex-col items-center justify-center h-full text-center py-12">
               <Heart className="w-16 h-16 text-emerald-200 mb-4" />
               <h3 className="text-xl font-bold text-gray-700 mb-2">
-                {locale === 'ar' ? 'أهلاً بيك في يقين' : 'Welcome to Yaqeen'}
+                أهلاً بيك في يقين
               </h3>
               <p className="text-gray-500 max-w-md mb-8">
-                {locale === 'ar'
-                  ? 'أنا هنا عشان أساعدك وأجاوب على أسئلتك عن السرطان والعلاج في مصر. اسألني أي حاجة!'
-                  : "I'm here to help you and answer your questions about cancer and treatment in Egypt. Ask me anything!"}
+                أنا هنا عشان أساعدك وأجاوب على أسئلتك عن السرطان والعلاج في مصر. اسألني أي حاجة!
               </p>
               <QuickPrompts locale={locale} onSelect={handleQuickPrompt} />
             </div>
@@ -86,7 +84,7 @@ export default function ChatInterface({ locale }: ChatInterfaceProps) {
               {isLoading && (
                 <div className={cn('flex items-center gap-2 text-gray-400', isRTL ? 'flex-row-reverse' : '')}>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>{locale === 'ar' ? 'بفكر...' : 'Thinking...'}</span>
+                  <span>بفكر...</span>
                 </div>
               )}
               <div ref={messagesEndRef} />
@@ -99,9 +97,7 @@ export default function ChatInterface({ locale }: ChatInterfaceProps) {
           <div className="mx-6 mb-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3 text-red-700">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <p className="text-sm">
-              {locale === 'ar'
-                ? 'حصل خطأ. جرب تاني أو تواصل معانا.'
-                : 'An error occurred. Please try again or contact us.'}
+              حصل خطأ. جرب تاني أو تواصل معانا.
             </p>
           </div>
         )}

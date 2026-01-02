@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle, Eye, Hand, CircleDot } from 'lucide-react';
+import { ArrowLeft, ArrowRight, RotateCcw, CheckCircle2, AlertTriangle, AlertCircle, Eye, Hand, CircleDot, Scale, Thermometer, Stethoscope, Search, Activity, Droplets, ShieldCheck, BookOpen } from 'lucide-react';
 import type { Survey } from '@/content/ar/screening';
 import { cn } from '@/lib/utils';
 
@@ -20,16 +20,47 @@ const selfExamSteps = {
     { icon: Hand, title: 'الفحص بالأصابع', desc: 'بحركة دائرية، افحصي كل منطقة من الثدي بأطراف أصابعك' },
     { icon: CircleDot, title: 'تحت الإبط', desc: 'متنسيش فحص منطقة تحت الإبط لأي تكتلات' },
   ],
-  en: [
-    { icon: Eye, title: 'Mirror Check', desc: 'Stand in front of a mirror and look for any changes in shape or size' },
-    { icon: Hand, title: 'Finger Exam', desc: 'Using circular motions, examine each area of the breast with your fingertips' },
-    { icon: CircleDot, title: 'Under Arm', desc: "Don't forget to check the underarm area for any lumps" },
-  ],
 };
 
 const warningSigns = {
   ar: ['تغير في حجم أو شكل الثدي', 'تكتل أو سماكة جديدة', 'تغير في الجلد أو الحلمة', 'إفرازات غير طبيعية'],
-  en: ['Change in breast size or shape', 'New lump or thickening', 'Changes in skin or nipple', 'Unusual discharge'],
+};
+
+// General Cancer Self-Examination Guide
+const generalSelfExamSteps = {
+  ar: [
+    { icon: Scale, title: 'راقب وزنك', desc: 'تابع وزنك شهرياً. فقدان أكثر من 5 كيلو بدون سبب واضح يستحق الانتباه.' },
+    { icon: Search, title: 'افحص جلدك', desc: 'افحص جسمك كله شهرياً. لاحظ أي شامات جديدة أو تغير في الشامات الموجودة (اللون، الحجم، الشكل).' },
+    { icon: Hand, title: 'تحسس التكتلات', desc: 'افحص الرقبة، تحت الإبط، والبطن لأي تورم أو كتل غير طبيعية.' },
+    { icon: Stethoscope, title: 'راقب جسمك', desc: 'انتبه لأي ألم مستمر، تعب غير مبرر، أو تغيرات في الهضم والإخراج.' },
+    { icon: Droplets, title: 'لاحظ أي نزيف', desc: 'أي نزيف غير طبيعي (في البول، البراز، السعال) يحتاج فحص طبي.' },
+    { icon: Activity, title: 'الفحص الدوري', desc: 'اعمل فحص طبي شامل سنوياً حتى لو ما عندك أعراض. الكشف المبكر ينقذ الأرواح.' },
+  ],
+};
+
+const generalWarningSigns = {
+  ar: [
+    'فقدان وزن غير مبرر',
+    'تعب وإرهاق مستمر',
+    'ألم مستمر بدون سبب',
+    'تغير في الشامات أو الجلد',
+    'تكتلات أو أورام جديدة',
+    'نزيف غير طبيعي',
+    'صعوبة في البلع',
+    'تغير في عادات الإخراج',
+  ],
+};
+
+const cautionAcronym = {
+  ar: [
+    { letter: 'ت', word: 'تغير', desc: 'تغير في عادات الإخراج أو التبول' },
+    { letter: 'ج', word: 'جرح', desc: 'جرح أو قرحة لا تلتئم' },
+    { letter: 'ن', word: 'نزيف', desc: 'نزيف أو إفرازات غير طبيعية' },
+    { letter: 'ت', word: 'تكتل', desc: 'تكتل أو سماكة في أي مكان' },
+    { letter: 'ع', word: 'عسر', desc: 'عسر هضم أو صعوبة في البلع' },
+    { letter: 'ش', word: 'شامة', desc: 'شامة أو ثؤلول يتغير' },
+    { letter: 'س', word: 'سعال', desc: 'سعال أو بحة مستمرة' },
+  ],
 };
 
 export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuestionsProps) {
@@ -37,9 +68,14 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [showResults, setShowResults] = useState(false);
-  const [showSelfExamIntro, setShowSelfExamIntro] = useState(survey.id === 'breast');
+  const [showSelfExamIntro, setShowSelfExamIntro] = useState(survey.id === 'breast' || survey.id === 'general');
   const [showSelfExamSteps, setShowSelfExamSteps] = useState(false);
-  const isRTL = locale === 'ar';
+  const [showGeneralGuide, setShowGeneralGuide] = useState(false);
+  const isRTL = true;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
 
   const question = survey.questions[currentQuestion];
   const totalQuestions = survey.questions.length;
@@ -54,6 +90,7 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
       setCurrentQuestion((prev) => prev + 1);
     } else {
       setShowResults(true);
+      scrollToTop();
     }
   };
 
@@ -67,6 +104,7 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
     setCurrentQuestion(0);
     setAnswers({});
     setShowResults(false);
+    scrollToTop();
   };
 
   const calculateRisk = (): RiskLevel => {
@@ -101,12 +139,10 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
                 <Hand className="w-8 h-8 text-pink-600" />
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                {locale === 'ar' ? 'الفحص الذاتي للثدي' : 'Breast Self-Examination'}
+                الفحص الذاتي للثدي
               </h2>
               <p className="text-gray-600">
-                {locale === 'ar'
-                  ? 'هل تحبي تتعلمي خطوات الفحص الذاتي قبل ما تبدأي الاستبيان؟'
-                  : 'Would you like to learn self-examination steps before starting the survey?'}
+                هل تحبي تتعلمي خطوات الفحص الذاتي قبل ما تبدأي الاستبيان؟
               </p>
             </div>
 
@@ -115,16 +151,17 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
                 onClick={() => {
                   setShowSelfExamIntro(false);
                   setShowSelfExamSteps(true);
+                  scrollToTop();
                 }}
                 className="w-full p-4 rounded-xl bg-pink-500 text-white font-bold hover:bg-pink-600 transition-colors"
               >
-                {locale === 'ar' ? 'أيوه، عايزة أتعلم' : 'Yes, I want to learn'}
+                أيوه، عايزة أتعلم
               </button>
               <button
-                onClick={() => setShowSelfExamIntro(false)}
+                onClick={() => { setShowSelfExamIntro(false); scrollToTop(); }}
                 className="w-full p-4 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-colors"
               >
-                {locale === 'ar' ? 'لا، ابدأ الاستبيان مباشرة' : 'No, start the survey directly'}
+                لا، ابدأ الاستبيان مباشرة
               </button>
             </div>
           </div>
@@ -133,10 +170,60 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
     );
   }
 
-  // Self-Exam Steps Screen
+  // General Cancer Self-Exam Introduction Screen
+  if (showSelfExamIntro && survey.id === 'general') {
+    return (
+      <div className="container mx-auto px-4 py-12 min-h-screen animate-fade-in">
+        <div className="max-w-2xl mx-auto">
+          <button
+            onClick={onBack}
+            className={cn('flex items-center text-gray-500 hover:text-emerald-600 mb-6 transition-colors')}
+          >
+            <ArrowLeft className={cn('w-5 h-5', isRTL ? 'ml-2 rotate-180' : 'mr-2')} />
+            {t('backToSurveys')}
+          </button>
+
+          <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-3xl p-8 border border-teal-200">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-teal-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <ShieldCheck className="w-8 h-8 text-teal-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                دليل الفحص الذاتي الشامل
+              </h2>
+              <p className="text-gray-600">
+                هل تحب تتعلم العلامات التحذيرية وكيف تفحص نفسك قبل ما تبدأ الاستبيان؟
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => {
+                  setShowSelfExamIntro(false);
+                  setShowGeneralGuide(true);
+                  scrollToTop();
+                }}
+                className="w-full p-4 rounded-xl bg-teal-500 text-white font-bold hover:bg-teal-600 transition-colors"
+              >
+                أيوه، عايز أتعلم
+              </button>
+              <button
+                onClick={() => { setShowSelfExamIntro(false); scrollToTop(); }}
+                className="w-full p-4 rounded-xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-colors"
+              >
+                لا، ابدأ الاستبيان مباشرة
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Self-Exam Steps Screen (Breast)
   if (showSelfExamSteps) {
-    const steps = selfExamSteps[locale === 'ar' ? 'ar' : 'en'];
-    const signs = warningSigns[locale === 'ar' ? 'ar' : 'en'];
+    const steps = selfExamSteps.ar;
+    const signs = warningSigns.ar;
 
     return (
       <div className="container mx-auto px-4 py-12 min-h-screen animate-fade-in">
@@ -145,6 +232,7 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
             onClick={() => {
               setShowSelfExamSteps(false);
               setShowSelfExamIntro(true);
+              scrollToTop();
             }}
             className={cn('flex items-center text-gray-500 hover:text-emerald-600 mb-6 transition-colors')}
           >
@@ -155,7 +243,7 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
           <div className="bg-white rounded-3xl shadow-lg p-8">
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
               <Hand className="w-6 h-6 text-pink-600" />
-              {locale === 'ar' ? 'خطوات الفحص الذاتي' : 'Self-Exam Steps'}
+              خطوات الفحص الذاتي
             </h2>
 
             <div className="space-y-4 mb-6">
@@ -177,7 +265,7 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
 
             <div className="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-200">
               <p className="text-sm font-bold text-amber-800 mb-2">
-                {locale === 'ar' ? 'استشيري طبيبك فوراً لو لاحظتي:' : 'Consult your doctor immediately if you notice:'}
+                استشيري طبيبك فوراً لو لاحظتي:
               </p>
               <div className="flex flex-wrap gap-2">
                 {signs.map((sign, idx) => (
@@ -189,10 +277,118 @@ export default function SurveyQuestions({ survey, locale, onBack }: SurveyQuesti
             </div>
 
             <button
-              onClick={() => setShowSelfExamSteps(false)}
+              onClick={() => { setShowSelfExamSteps(false); scrollToTop(); }}
               className="w-full p-4 rounded-xl bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition-colors"
             >
-              {locale === 'ar' ? 'فهمت، ابدأ الاستبيان' : 'Got it, start the survey'}
+              فهمت، ابدأ الاستبيان
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // General Self-Exam Guide Screen
+  if (showGeneralGuide) {
+    const steps = generalSelfExamSteps.ar;
+    const signs = generalWarningSigns.ar;
+    const caution = cautionAcronym.ar;
+
+    return (
+      <div className="container mx-auto px-4 py-12 min-h-screen animate-fade-in">
+        <div className="max-w-2xl mx-auto">
+          <button
+            onClick={() => {
+              setShowGeneralGuide(false);
+              setShowSelfExamIntro(true);
+              scrollToTop();
+            }}
+            className={cn('flex items-center text-gray-500 hover:text-emerald-600 mb-6 transition-colors')}
+          >
+            <ArrowLeft className={cn('w-5 h-5', isRTL ? 'ml-2 rotate-180' : 'mr-2')} />
+            {t('backToSurveys')}
+          </button>
+
+          <div className="bg-white rounded-3xl shadow-lg p-8">
+            {/* Header */}
+            <h2 className="text-xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+              <BookOpen className="w-6 h-6 text-teal-600" />
+              دليل الفحص الذاتي الشامل
+            </h2>
+            <p className="text-gray-500 text-sm mb-6">
+              تعلم كيف تراقب جسمك وتكتشف العلامات التحذيرية مبكراً
+            </p>
+
+            {/* CAUTION Acronym Section */}
+            <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-5 mb-6 border border-teal-200">
+              <h3 className="font-bold text-teal-800 mb-4 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5" />
+                العلامات السبع التحذيرية للسرطان
+              </h3>
+              <div className="space-y-3">
+                {caution.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-teal-600 text-white rounded-full flex items-center justify-center font-bold text-lg shrink-0">
+                      {item.letter}
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-bold text-teal-800">{item.word}</span>
+                      <span className="text-gray-600 text-sm"> - {item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Self-Exam Steps */}
+            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <Search className="w-5 h-5 text-teal-600" />
+              خطوات الفحص الذاتي الشهري
+            </h3>
+            <div className="space-y-4 mb-6">
+              {steps.map((step, idx) => {
+                const StepIcon = step.icon;
+                return (
+                  <div key={idx} className="flex items-start gap-4 bg-teal-50 rounded-xl p-4">
+                    <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center shrink-0">
+                      <StepIcon className="w-6 h-6 text-teal-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-800">{step.title}</h4>
+                      <p className="text-gray-600 text-sm">{step.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Warning Signs Summary */}
+            <div className="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-200">
+              <p className="text-sm font-bold text-amber-800 mb-3">
+                استشر طبيبك فوراً لو لاحظت أي من العلامات دي:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {signs.map((sign, idx) => (
+                  <span key={idx} className="text-xs bg-amber-100 text-amber-700 px-3 py-1.5 rounded-full">
+                    {sign}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Key Message */}
+            <div className="bg-emerald-50 rounded-xl p-4 mb-6 border border-emerald-200">
+              <p className="text-sm text-emerald-800">
+                <span className="font-bold">تذكر: </span>
+                الكشف المبكر ينقذ الأرواح! معظم الأورام قابلة للعلاج لو اتكشفت بدري. افحص نفسك شهرياً واعمل فحص طبي شامل سنوياً.
+              </p>
+            </div>
+
+            <button
+              onClick={() => { setShowGeneralGuide(false); scrollToTop(); }}
+              className="w-full p-4 rounded-xl bg-teal-600 text-white font-bold hover:bg-teal-700 transition-colors"
+            >
+              فهمت، ابدأ الاستبيان
             </button>
           </div>
         </div>

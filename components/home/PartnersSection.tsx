@@ -8,11 +8,11 @@ interface PartnersSectionProps {
 }
 
 const partners = [
-  { nameAr: 'وزارة الصحة والسكان', nameEn: 'Ministry of Health', color: 'text-blue-600', bg: 'bg-blue-50' },
-  { nameAr: 'مستشفى 57357', nameEn: '57357 Hospital', color: 'text-red-600', bg: 'bg-red-50' },
-  { nameAr: 'مؤسسة بهية', nameEn: 'Baheya Foundation', color: 'text-pink-600', bg: 'bg-pink-50' },
-  { nameAr: 'المعهد القومي للأورام', nameEn: 'National Cancer Institute', color: 'text-emerald-800', bg: 'bg-emerald-50' },
-  { nameAr: 'شفاء الأورمان', nameEn: 'Shefaa Al-Orman', color: 'text-orange-600', bg: 'bg-orange-50' },
+  { name: 'وزارة الصحة والسكان', color: 'text-blue-600', bg: 'bg-blue-50' },
+  { name: 'مستشفى 57357', color: 'text-red-600', bg: 'bg-red-50' },
+  { name: 'مؤسسة بهية', color: 'text-pink-600', bg: 'bg-pink-50' },
+  { name: 'المعهد القومي للأورام', color: 'text-emerald-800', bg: 'bg-emerald-50' },
+  { name: 'شفاء الأورمان', color: 'text-orange-600', bg: 'bg-orange-50' },
 ];
 
 export default function PartnersSection({ locale }: PartnersSectionProps) {
@@ -34,7 +34,7 @@ export default function PartnersSection({ locale }: PartnersSectionProps) {
                 <Award className={`w-8 h-8 ${partner.color}`} />
               </div>
               <span className="text-sm font-bold text-gray-700">
-                {locale === 'ar' ? partner.nameAr : partner.nameEn}
+                {partner.name}
               </span>
             </div>
           ))}

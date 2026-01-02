@@ -11,7 +11,7 @@ interface FooterProps {
 export default function Footer({ locale }: FooterProps) {
   const t = useTranslations('footer');
   const tNav = useTranslations('nav');
-  const appName = locale === 'ar' ? 'يقين' : 'Yaqeen';
+  const appName = 'يقين';
 
   return (
     <footer className="bg-gray-900 text-gray-400 py-16 mt-auto relative overflow-hidden">
