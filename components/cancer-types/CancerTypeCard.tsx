@@ -11,7 +11,7 @@ interface CancerTypeCardProps {
 
 export default function CancerTypeCard({ cancerType }: CancerTypeCardProps) {
   const IconComponent =
-    (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[cancerType.icon] || Activity;
+    (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[cancerType.icon] || Activity;
 
   const colorClasses: Record<string, { bg: string; text: string; border: string; hover: string }> = {
     pink: {

@@ -12,7 +12,7 @@ interface TreatmentSectionProps {
 
 function TreatmentOptionCard({ option }: { option: TreatmentOption }) {
   const IconComponent = option.icon
-    ? (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[option.icon] || Pill
+    ? (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[option.icon] || Pill
     : Pill;
 
   const typeColors: Record<string, { bg: string; text: string }> = {

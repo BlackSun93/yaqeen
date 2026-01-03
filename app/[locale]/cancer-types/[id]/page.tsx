@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { CancerTypeDetail } from '@/components/cancer-types';
@@ -37,5 +38,9 @@ export default async function CancerTypePage({ params }: CancerTypePageProps) {
     notFound();
   }
 
-  return <CancerTypeDetail cancerType={cancerType} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">جاري التحميل...</div>}>
+      <CancerTypeDetail cancerType={cancerType} />
+    </Suspense>
+  );
 }

@@ -15,7 +15,7 @@ interface ArticlesHubProps {
 // Article Card Component
 function ArticleCard({ article }: { article: ArticleItem }) {
   const IconComponent =
-    (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[article.icon] ||
+    (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[article.icon] ||
     LucideIcons.FileText;
 
   const categoryMeta = articleCategories.find((c) => c.id === article.category);
@@ -102,7 +102,7 @@ function CategoryFilters({
       </button>
       {categories.map((category) => {
         const IconComponent =
-          (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[category.icon] ||
+          (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[category.icon] ||
           LucideIcons.FileText;
         const isSelected = selectedCategory === category.id;
 

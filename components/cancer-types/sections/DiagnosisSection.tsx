@@ -10,7 +10,7 @@ interface DiagnosisSectionProps {
 
 function DiagnosisMethodCard({ method }: { method: DiagnosisMethod }) {
   const IconComponent = method.icon
-    ? (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[method.icon] || Stethoscope
+    ? (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[method.icon] || Stethoscope
     : Stethoscope;
 
   const getCostBadge = () => {

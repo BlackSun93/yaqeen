@@ -11,7 +11,7 @@ interface PreventionSectionProps {
 
 function RiskFactorCard({ factor }: { factor: RiskFactor }) {
   const IconComponent = factor.icon
-    ? (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[factor.icon] || AlertCircle
+    ? (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[factor.icon] || AlertCircle
     : AlertCircle;
 
   return (

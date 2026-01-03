@@ -43,7 +43,7 @@ export default function CancerTypeDetail({ cancerType }: CancerTypeDetailProps) 
   const [activeTab, setActiveTab] = useState<TabId>(tabParam && tabs.some(t => t.id === tabParam) ? tabParam : 'overview');
 
   const IconComponent =
-    (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[cancerType.icon] || Activity;
+    (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[cancerType.icon] || Activity;
 
   const colorClasses: Record<string, { bg: string; text: string; border: string; light: string }> = {
     pink: { bg: 'bg-pink-600', text: 'text-pink-600', border: 'border-pink-200', light: 'bg-pink-50' },

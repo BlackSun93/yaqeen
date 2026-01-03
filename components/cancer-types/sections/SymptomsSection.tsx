@@ -10,7 +10,7 @@ interface SymptomsSectionProps {
 
 function SymptomCard({ symptom, color }: { symptom: CancerSymptom; color: string }) {
   const IconComponent = symptom.icon
-    ? (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[symptom.icon] || AlertCircle
+    ? (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[symptom.icon] || AlertCircle
     : AlertCircle;
 
   const isUrgent = symptom.warningLevel === 'urgent';
